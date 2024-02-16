@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="icon" type="image/png" href="https://i.ibb.co/YtmNbTq/transparent-logo.png">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0c0c46;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    #profileCard {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      box-sizing: border-box;
+      background-color: #1a5276;
+      color: #fff;
+    }
+
+    #profilePhoto {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 10px;
+    }
+
+    #profilePhoto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #profileInfo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    #profileName {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    #profileEmail {
+      font-size: 14px;
+    }
+
+    #profileButtons {
+      display: flex;
+      align-items: center;
+    }
+
+    #signOutButton,
+    #playButton {
+      background-color: #fff;
+      color: #1a5276;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    #signOutButton:hover,
+    #playButton:hover {
+      background-color: #1a5276;
+      color: #fff;
+    }
+
+    #content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: left;
+      padding: 20px;
+      margin-top: 50px;
+    }
+
+    .button {
+      background-color: #1a5276;
+      color: #fff;
+      padding: 35px 50px;
+      font-size: 38px;
+      border: none;
+      margin: 10px;
+      cursor: pointer;
+      display: none;
+      border-radius: 12px;
+      font-family: 'Montserrat', sans-serif;
+
+    }
+
+    .button:hover {
+      background-color: #ff0000;
+    }
+
+    #signInButton {
+      display: block;
+    }
+
+    #navbar {
+      display: flex;
+      background-color: #0c0c46;
+      padding: 10px;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    #logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    #logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #fff;
+      margin-right: 10px;
+    }
+
+    #logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    #brand-name {
+      color: #fff;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    #navbar-buttons {
+      display: flex;
+      align-items: center;
+      font-size: 22px;
+    }
+
+    #navbar-buttons button {
+      background-color: #00f;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    #navbar-buttons button:hover {
+      background-color: #000;
+    }
+
+    #navbar-buttons #leaderboard-button {
+      margin-left: 0;
+    }
+
+    @media only screen and (max-width: 600px) {
+      #profileCard {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      #userInfo {
+        margin-top: 10px;
+      }
+
+      #navbar-buttons {
+        margin-top: 10px;
+      }
+    }
+
+    #content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: left;
+      padding: 20px;
+      margin-top: 50px;
+    }
+
+    details {
+      margin-bottom: 20px;
+      color: #ddd;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      cursor: pointer;
+      color: #fff;
+      list-style: none;
+    }
+
+    details p {
+      margin-bottom: 15px;
+    }
+
+    details ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    details li {
+      margin-bottom: 8px;
+      list-style: initial;
+    }
+
+    details a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    details a:hover {
+      text-decoration: underline;
+      color: #00f;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      position: block;
+      bottom: 0;
+      max-width: 100%;
+      color: #ddd;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="navbar">
+    <div id="logo-container">
+      <div id="logo">
+        <img src="https://i.ibb.co/Zmqqt73/IMG-20240125-223643.jpg" alt="Logo">
+      </div>
+      <div id="brand-name">PreCipherSaga</div>
+    </div>
+    <div id="navbar-buttons">
+      <button onclick="openLeaderboard()"><i class="fa-solid fa-medal"></i></button>
+      <button onclick="contri()"><i class="fa-solid fa-users-gear"></i></button>
+    </div>
+  </div>
+
+  <div id="profileCard">
+    <div id="profilePhoto">
+      <img src="" alt="User Profile">
+    </div>
+    <div id="userInfo">
+      <div id="userName"></div>
+      <div id="userEmail"></div>
+      <div id="userPoints"></div>
+    </div>
+    <div id="navbar-buttons">
+      <button id="signInButton">Sign In with Google</button>
+      <button id="signOutButton">Sign Out</button>
+      <button id="play" onclick="play()">Play</button>
+    </div>
+  </div>
+
+  <div id="content">
+    <details>
+      <summary><i class="fa-solid fa-angles-down"></i> &nbsp;&nbsp;&nbsp; About The Event</summary>
+      <p>
+        PreCipherSaga is a prelude to the cryptic hunt event being held during EPITOME'24, the annual tech fest of Gati
+        Shakti Vishwavidyalaya, Vadodara.
+      </p>
+    </details>
+
+    <details>
+      <summary><i class="fa-solid fa-angles-down"></i> &nbsp;&nbsp;&nbsp; What Are Cryptic Hunts?</summary>
+      <p>
+        Cryptic hunts are like treasure hunts, but online. They require you to hunt the internet for clues and hints to
+        solve given questions. Cipher coders, AI tools, QR codes, coding softwares, etc. are all allowed and to be used.
+        You do not require any coding knowledge to win one, but it always helps!
+      </p>
+    </details>
+
+    <details>
+      <summary><i class="fa-solid fa-angles-down"></i> &nbsp;&nbsp;&nbsp; How Will Winners Be Decided?</summary>
+      <p>
+        The person to solve most levels by the end of the competition wins. In case of a tie, winners are judged based
+        on the time. Early to solve wins.
+      </p>
+    </details>
+
+    <details>
+      <summary><i class="fa-solid fa-angles-down"></i> &nbsp;&nbsp;&nbsp; Important Links</summary>
+      <ul>
+        <li>WhatsApp Group: <a href="https://chat.whatsapp.com/FI99TpgOVMXDicyZ0qKrnp">Join (Only for registered members)</a>
+        </li>
+        <li>Registration: <a href="#">Link</a>
+        </li>
+      </ul>
+    </details>
+
+    <details>
+      <summary><i class="fa-solid fa-angles-down"></i> &nbsp;&nbsp;&nbsp; Rules</summary>
+      <ul>
+        <li>Make sure you have registered on the platform. Make sure only to use your registered student email; all
+          other accounts
+          will be marked as non-compete & you will not be allowed to score any points.</li>
+        <li>All hints & lead confirmations will be done via offical Whatsapp group or Instagram page only; link will be
+          available above.</li>
+        <li>Asking other players for hints is an offense and can lead to disqualification if found.</li>
+        <li>Sharing answers or hints is strictly prohibited among users via any medium. Only organizers hold this right.
+          If found will lead to direct disqualification.</li>
+        <li>To report misconduct by any player, please DM the event coordinators.</li>
+        <li>Reverse engineering the platform means direct ban from the competition. Bugs if found should be reported and
+          not exploited. Exploiting a bug also leads to disqualification.</li>
+        <li>Decision by organizers is final and should not be questioned.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary><i class="fa-solid fa-angles-down"></i> &nbsp;&nbsp;&nbsp; Guidelines</summary>
+      <ul>
+        <li>All answers are case insensitive. Special characters are also ignored from the input. So for example, "TeCh
+          no;.," = "techno"</li>
+        <li>File passwords are sensitive to all the stuff mentioned above. So be wary while you enter file passwords.
+        </li>
+        <li>Stay aware for in platform hints or WhatsApp hints. They could take you far in the game.</li>
+        <li>Every clue in the question is important. If it wasn't important, it wouldn't be there.</li>
+        <li>Beware of the spelling you enter, we do not autocorrect.</li>
+        <li>You can always clear your doubts on WhatsApp group. Be sure not to discuss answers or question about answers
+          in any way.
+        </li>
+        <li>And if it was not obvious, team play, answer sharing, hint sharing and collaborating with other competitors
+          in general is not allowed and any such evidence can lead to disqualification. We have anti-cheats installed in
+          our code that can easily catch cheaters.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary><i class="fa-solid fa-angles-down"></i> &nbsp;&nbsp;&nbsp; Sample Levels</summary>
+      <ul>
+        <li><b>Level 1</b><br><b>Question:</b><br>In language woven, scenes unfold, <br>A cinematic tale, untold. <br>To
+          English realms, let translation dance, <br>Express the movie series name in a new expanse.
+          <br><b>Image:</b><br><a
+            href="https://i.ibb.co/ZKTmrZy/download.jpg">https://i.ibb.co/ZKTmrZy/download.jpg</a><br><b>Answer:</b><br>foulplay
+        </li>
+        <li><b>Level 2</b><br><b>Question:</b><br>Maa ka bharosa aur Dentist ka sujhaya
+          <br><b>File:</b><br><a
+            href="https://drive.google.com/file/d/1_fhBhsU5IUTMx72CxFN8886NeIQG1KUj/view?usp=drivesdk">https://drive.google.com/file/d/1_fhBhsU5IUTMx72CxFN8886NeIQG1KUj/view?usp=drivesdk</a><br><b>Answer:</b><br>guitar
+        </li>
+        <li><b>Level 3</b><br><b>Question:</b><br>Nlcha Nlcha! Sio jcwe oj nby wuff. Qbun xi sio mus?
+          <br><b>File:</b><br><a
+            href="https://docs.google.com/document/d/1pLsF1b9QHSsTYXeka3_-vsD4ofBifAxWMeMLHJKsDBU/edit?usp=drivesdk">https://docs.google.com/document/d/1pLsF1b9QHSsTYXeka3_-vsD4ofBifAxWMeMLHJKsDBU/edit?usp=drivesdk</a><br><b>Answer:</b><br>hello
+        </li>
+        <li><b>Level 4</b><br><b>Question:</b><br>Keep it short!<br>w6KKz22JzVw?si=jK6TbM4nyttFe_P3
+          <br><b>File:</b><br><a
+            href="https://drive.google.com/file/d/1aBQPMkiJ-jkY2Oy6tlDm0a5WdXL7IB3-/view?usp=drivesdk">https://drive.google.com/file/d/1aBQPMkiJ-jkY2Oy6tlDm0a5WdXL7IB3-/view?usp=drivesdk</a><br><b>Answer:</b><br>needle
+        </li>
+        <li><b>Level 5</b><br><b>Question:</b><br>preciphersaga.md
+          <br><b>Image:</b><br><a
+            href="https://i.ibb.co/47kd7nv/Screenshot-20240125-174313-023.png">https://i.ibb.co/47kd7nv/Screenshot-20240125-174313-023.png</a><br><b>Answer:</b><br>mixedsignals
+        </li>
+        <li><b>Level 6</b><br>Congratulations on solving the sample levels.<br>Remember, the main competition won't be
+          easy. Only the one worthy can make it to the end.<br>Challenge yourself by participating and see where do you
+          stand among your peers. Everything has a first time, let this be the one to introduce you to the astonishing
+          world of cryptic hunts.<br>Check back later for more sample questions.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary><i class="fa-solid fa-angles-down"></i> &nbsp;&nbsp;&nbsp; Learning Resources</summary>
+      <p>
+        Cryptic hunts generally revolve around tech, trivia, pop culture, and mostly anything you can find on the
+        internet. Googling is allowed and heavily encouraged, but it won't directly get you the answer in most cases.
+        Think logically, make connections between different parts of levels. Make sure you check the source of the
+        webpage for any hints hidden there. Cryptic hunts are all about connecting the dots and finding the solutions.
+      </p>
+      <p>Keep getting your leads confirmed from the organizers. If you think you've gotten stuck somewhere, seek for
+        public hints on the platofrm or either on WhatsApp.</p>
+      <p>The levels will basically consist of a set of clues, all which link to ONE ANSWER.
+        The difficulty is random. You can expect questions of any difficulty at any level.</p>
+      <p>When you get two or more clues, try to connect them and find an interrelated clue from it. If it looks like a
+        completely random string, try appending it to the end of common URL patterns, like bit.ly/string,
+        youtube.com/watch?v=string etc. This is known as a backlink. For eg: you get harrywilson as a clue, you can use
+        the clue as a backlink on the hunt's site.</p>
+      <p>You will usually find clues in the following places (Look for them carefully, and try discovering more
+        yourself):</p>
+      <ul>
+        <li>The hunt's site: Clues are sometimes hidden in the hunt's rules and maybe even in the event descriptions. If
+          you get a blank document as a clue try using ctrita as most of the hunts hide the clue by camouflaging it. The
+          page title. The URL. Focus on every word carefully as almost every hunt uses a lot of wordplay.</li>
+        <li>The source code: Look at the comments. There could be other
+          links inside the code. (This especially helps in cases in which there aren't any on-screen clues.) You can
+          even try using Inspect Element. (Ctrl+Shift+I) You can also try using View Page Source. (Ctrl+Shift+U) Editing
+          the source code and the URL - In many cases, in relatively more difficult levels, sometimes the submit button
+          is hidden. You may even get a 404 error when you enter the level's URL. In that case, you may have to enter
+          another URL / play with the source code a bit to crack this.</li>
+        <li>Audio Files: Name of the audio file can be very helpful. Duration of the file and the audio content itself
+          is useful. Text/images in the spectrogram of the audio can give clues. A spectrogram is a visual
+          representation of the loudness of the frequencies in the audio. Locked files within the audio file can be
+          present. Beeps or clicks are common in audio files and usually represent morse or binary code. Changing the
+          tempo and/or the speed of the audio may also be helpful to get clues. Changing the format may also prove to be
+          helpful as some formats may be easier to modify and play around with. Some Common audio tools are Audacity,
+          Sonic Visualizer, Deep sound, Shazam and other online sites.</li>
+        <li>Videos/GIFs: The content of the file itself may be useful. There could be a visual representation of
+          morse/binary code, example - blinking lights. The audio may need to be extracted/be the only relevant part.
+          Sometimes, only some of the frames are relevant; you may need to pause/slow down the video or split its frames
+          into images. Speeding up the video might be useful as well.</li>
+        <li>Images: Name of the image file can be very helpful. Dimensions of the image can provide hints. Strings can
+          be hidden in the metadata of the images. Steganography is frequently used. Steganography is a technique of
+          hiding information within another image, invisible to the naked eye to avoid detection. Changing contrast,
+          color schemes, brightness etc.can also help. Headers or the file type may have issues, correcting/changing
+          them is a common technique. Online tools like aperisolve can be used along.</li>
+        <li>Backlinks: Backlinks are very important aspects of hunts and are also almost always used in hunts. For
+          images, the most famous backlink site is imgur.com. pastebin.com is also a very famous backlink site, it is
+          used for storing clues. Sometimes, the pastebin can be password encrypted, in that case, we need to find a
+          clue that fits the password. bit.ly is a famous URL shortener used along withtinyurl.com (which can have a
+          name as a backlink) Another used backlink site is imgflip.com If you are not able to figure out which site the
+          backlink belongs to, you can always go to a backlink identifier such as a4x.me. Sometimes the backlinks are
+          also encrypted.</li>
+      </ul>
+    </details>
+
+  </div>
+  <footer>
+    <p><a href="credits.html" style="color: #ddd;text-decoration: none;">Made with &#10084; by Programming
+        Domain, TechnoCrats GSV</a></p>
+  </footer>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCe_avq70kaG5Om1Pmi3vgQdCqppZ9066k",
+      authDomain: "preciphersaga.firebaseapp.com",
+      databaseURL: "https://preciphersaga-default-rtdb.firebaseio.com",
+      projectId: "preciphersaga",
+      storageBucket: "preciphersaga.appspot.com",
+      messagingSenderId: "311896747046",
+      appId: "1:311896747046:web:9a1844f950caf462f44ae7",
+      measurementId: "G-4CFBLSVMV4"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
+
+    function updateProfileCard(user) {
+      const profilePhotoElement = document.getElementById('profilePhoto').getElementsByTagName('img')[0];
+      const profileNameElement = document.getElementById('userName');
+      const profileEmailElement = document.getElementById('userEmail');
+      const profilePointsElement = document.getElementById('userPoints');
+      document.getElementById('signInButton').style.display = 'none';
+
+      if (user.photoURL) {
+        profilePhotoElement.src = user.photoURL;
+      } else {
+        profilePhotoElement.src = 'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png?w=1024';
+      }
+
+      profileNameElement.innerHTML = user.displayName || 'Unknown';
+      profileEmailElement.innerHTML = user.email || 'No email available';
+
+      const usersRef = database.ref('/users/' + user.uid);
+      usersRef.once('value')
+        .then(snapshot => {
+          const userData = snapshot.val();
+          if (userData && userData.points !== undefined) {
+            profilePointsElement.innerHTML = 'Points: ' + userData.points;
+          } else {
+            profilePointsElement.innerHTML = 'No points available';
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching user data:", error);
+          profilePointsElement.innerHTML = 'Error fetching points';
+        });
+    }
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        updateProfileCard(user);
+      } else {
+        handleSignOut();
+      }
+    });
+
+    document.getElementById('signInButton').addEventListener('click', () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(result => {
+          handleSignIn(result.user);
+        })
+        .catch(error => {
+          console.error("Error signing in:", error);
+        });
+    });
+
+    document.getElementById('signOutButton').addEventListener('click', () => {
+      auth.signOut();
+    });
+
+    function handleSignIn(user) {
+      const email = user.email;
+      if (email.endsWith('gsv.ac.in') || ['sohamwani1812@gmail.com', '22f3002538@ds.study.iitm.ac.in'].includes(email)) {
+        const usersRef = database.ref('/users/' + user.uid);
+        usersRef.transaction(function (currentData) {
+          if (!currentData) {
+            return {
+              points: 0,
+              name: user.displayName || 'Unknown'
+            };
+          }
+        })
+          .then(() => {
+            document.getElementById('signInButton').style.display = 'none';
+            document.getElementById('signOutButton').style.display = 'block';
+            document.getElementById('play').style.display = 'block';
+            document.getElementById('profilePhoto').style.display = 'block';
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('profileCard').style.justifyContent = 'space-between';
+          })
+          .catch(error => {
+            console.error("Error creating /users/uid node:", error);
+          });
+      } else {
+        auth.signOut();
+        alert('Only GSV domains are allowed');
+      }
+    }
+
+    function handleSignOut() {
+      document.getElementById('signInButton').style.display = 'block';
+      document.getElementById('signOutButton').style.display = 'none';
+      document.getElementById('play').style.display = 'none';
+      document.getElementById('profilePhoto').style.display = 'none';
+      document.getElementById('userInfo').style.display = 'none';
+      document.getElementById('profileCard').style.justifyContent = 'center';
+    }
+
+    function play() {
+      window.location.href = 'index.html';
+    }
+
+    function contri() {
+      window.location.href = 'credits.html';
+    }
+
+    function openLeaderboard() {
+      window.location.href = 'leaderboard.html';
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const navbarHeight = document.getElementById('navbar').offsetHeight;
+      document.getElementById('profileCard').style.marginTop = navbarHeight + 'px';
+    });
+  </script>
+</body>
+
+</html>
