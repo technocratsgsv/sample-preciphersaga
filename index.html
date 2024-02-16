@@ -183,10 +183,7 @@
         <button id="submitButton" onclick="submitAnswer()">Submit</button>
         <br><br><br><br>
     </div>
-    <div id="modal" class="modal" style="display:none"></div>
-    <div id="nostart">
-        <h1>Hunt hasn't started yet. Check back later!</h1>
-    </div>
+    <div id="modal" class="modal"></div>
 
     <footer>
         <p><a href="credits.html" style="color: #ddd;text-decoration: none;">Made with &#10084; by Programming
@@ -225,7 +222,7 @@
                     const userPoints = snapshot.val() || 0;
                     const level = Math.floor(userPoints / 100) + 1;
 
-                    document.getElementById('levelTitle').innerText = `Level ${level}`;
+                    document.getElementById('levelTitle').innerText = `Sample Level ${level}`;
 
                     const questionRef = database.ref(`/questions/${level}`);
                     questionRef.once('value')
@@ -431,7 +428,6 @@
         document.addEventListener("DOMContentLoaded", function () {
             const navbarHeight = document.getElementById('navbar').offsetHeight;
             document.getElementById('content').style.marginTop = navbarHeight + 'px';
-            document.getElementById('nostart').style.marginTop = navbarHeight + 'px';
         });
 
         function contri() {
