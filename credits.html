@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credits</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/YtmNbTq/transparent-logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300&display=swap');
+
+    body {
+        background: linear-gradient(45deg, #0c0c46, #0f051d);
+    }
+
+    * {
+        font-family: 'Montserrat', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        outline: none;
+        border: none;
+        text-decoration: none;
+        transition: .2s linear;
+    }
+
+    .container {
+        padding: 15px 9%;
+        padding-bottom: 100px;
+    }
+
+    .container .heading {
+        text-align: center;
+        padding-top: 70px;
+        padding-bottom: 25px;
+        color: #fff;
+        text-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+        font-size: 50px;
+    }
+
+    .container .heading2 {
+        text-align: center;
+        color: #fff;
+        text-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+        font-size: 30px;
+        padding-top: 20px;
+        padding-bottom: 5px;
+    }
+
+    .container .heading3 {
+        text-align: center;
+        color: #ddd;
+        text-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+        font-size: 20px;
+        padding: 5px;
+    }
+
+    .container .box-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 15px;
+    }
+
+    .container .box-container .box {
+        box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+        border-radius: 5px;
+        background: #47c4ee;
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    .container .box-container .box img {
+        height: 200px;
+        border-radius: 100%;
+    }
+
+    .container .box-container h3 {
+        color: black;
+        font-family: 40px;
+        font-weight: 20px;
+        padding: 10px 0;
+    }
+
+    .container .box-container .box:hover {
+        box-shadow: 0 10px 15px rgba(0, 0, 0, .3);
+        transform: scale(1.03);
+    }
+
+    @media(max-width:768px) {
+        .container {
+            padding: 20px;
+        }
+    }
+
+    footer {
+        padding-top: 5%;
+        color: #fff;
+        text-align: center;
+    }
+
+    footer h2 {
+        size: 5px;
+    }
+
+    footer p {
+        padding-top: 1.5%;
+    }
+
+    #navbar {
+        display: flex;
+        background-color: #0c0c46;
+        padding: 10px;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        box-sizing: border-box;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    #logo-container {
+        display: flex;
+        align-items: center;
+    }
+
+    #logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #fff;
+        margin-right: 10px;
+    }
+
+    #logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    #brand-name {
+        color: #fff;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    #navbar-buttons {
+        display: flex;
+        align-items: center;
+        font-size: 22px;
+    }
+
+    #navbar-buttons button {
+        background-color: #00f;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    #navbar-buttons button:hover {
+        background-color: #000;
+
+    }
+
+    #navbar-buttons #leaderboard-button {
+        margin-left: 0;
+    }
+</style>
+
+<body>
+    <div id="navbar">
+
+        <div id="logo-container">
+            <div id="logo">
+                <img src="https://i.ibb.co/Zmqqt73/IMG-20240125-223643.jpg" alt="Logo">
+            </div>
+            <div id="brand-name">PreCipherSaga</div>
+        </div>
+        <div id="navbar-buttons">
+            <button onclick="play()"><i class="fa-solid fa-play"></i></button>
+            <button onclick="openLeaderboard()"><i class="fa-solid fa-medal"></i></button>
+            <button onclick="home()"><i class="fa-solid fa-house"></i></button>
+        </div>
+
+    </div>
+
+    <div class="container">
+
+        <h1 class="heading">OUR TEAM</h1>
+
+        <div class="box-container">
+
+            <div class="box">
+                <img src="https://i.ibb.co/nDKnzzj/3.jpg" alt="3" border="0"></a>
+                <h3>Shreya Mohanty</h3>
+                <h5>Lead</h5>
+            </div>
+
+            <div class="box">
+                <img src="https://i.ibb.co/CWT1yFn/4.jpg" alt="4" border="0"></a>
+                <h3>Rishav Kumar</h3>
+                <h5>Co-Lead</h5>
+            </div>
+
+            <div class="box">
+                <img src="https://i.ibb.co/6wWCTM4/7.jpg" alt="7" border="0"></a>
+                <h3>Meet Parmar</h3>
+                <h5>Member</h5>
+            </div>
+
+            <div class="box">
+                <img src="https://i.ibb.co/Mn0yMvt/5.jpg" alt="5" border="0"></a>
+                <h3>Shruti Verma</h3>
+                <h5>Member</h5>
+            </div>
+
+            <div class="box">
+                <img src="https://i.ibb.co/tmfGchT/6.jpg" alt="6" border="0"></a>
+                <h3>Aditya Acharya</h3>
+                <h5>Member</h5>
+            </div>
+
+            <div class="box">
+                <img src="https://i.ibb.co/w0zk8Dr/1.jpg" alt="1" border="0"></a>
+                <h3>Rajat Pandey</h3>
+                <h5>Mentor</h5>
+            </div>
+
+            <div class="box">
+                <img src="https://media.licdn.com/dms/image/D4D03AQHixx9tIY2vNA/profile-displayphoto-shrink_200_200/0/1693198973772?e=2147483647&v=beta&t=Y_Bx6SMrqxsEihBDYNbdBbSA6MzFsRWWZoBrqVKLZH4"
+                    alt="2" border="0"></a>
+                <h3>Soham Wani</h3>
+                <h5>Mentor</h5>
+            </div>
+
+        </div>
+        <h1 class="heading">CREDITS</h1>
+        <h2 class="heading2">Development Team</h2>
+        <h3 class="heading3">Soham Wani</h3>
+        <h3 class="heading3">Rishav Kumar</h3>
+        <h3 class="heading3">Meet Parmar</h3>
+        <h3 class="heading3">Shreya Mohanty</h3>
+        <h3 class="heading3"><a style='text-decoration:none;color:#aaaaff;'
+                href='https://github.com/technocratsgsv/PreCipherSaga'>Access Github Repo</a></h3>
+
+        <h2 class="heading2">Question Making Team</h2>
+        <h3 class="heading3">Shreya Mohanty</h3>
+        <h3 class="heading3">Shruthi Verma</h3>
+        <h3 class="heading3">Soham Wani</h3>
+
+        <h2 class="heading2">Logo Credits</h2>
+        <h3 class="heading3">Aditya Acharya</h3>
+
+        <h2 class="heading2">Mentors</h2>
+        <h3 class="heading3">Rajat Pandey</h3>
+        <h3 class="heading3">Soham Wani</h3>
+
+        <h2 class="heading2">Extended Thanks</h2>
+        <h3 class="heading3">Vivek Kumar</h3>
+
+        <h2 class="heading2">Ideation and Learning Resources</h2>
+        <h3 class="heading3">IITM BS Tech Society - Cosmos</h3>
+
+        <h2 class="heading2">Conducted By</h2>
+        <h3 class="heading3">TechnoCrats GSV</h3>
+        <footer>
+            <p><a href="credits.html" style="color: #ddd;text-decoration: none;">Made with &#10084; by Programming
+                    Domain, TechnoCrats GSV</a></p>
+        </footer>
+    </div>
+</body>
+
+<script>
+    function openLeaderboard() {
+        window.location.href = 'leaderboard.html';
+    }
+
+    function home() {
+        window.location.href = 'register.html';
+    }
+
+    function play() {
+        window.location.href = 'index.html';
+    }</script>
+
+</html>
