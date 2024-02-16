@@ -174,7 +174,7 @@
             <button onclick="contri()"><i class="fa-solid fa-users-gear"></i></button>
         </div>
     </div>
-    <div id="content" style="display:none">
+    <div id="content">
         <h1 id="levelTitle"></h1>
         <div id="questionText"></div>
         <img id="imageDisplay" alt="Question Image">
@@ -183,7 +183,7 @@
         <button id="submitButton" onclick="submitAnswer()">Submit</button>
         <br><br><br><br>
     </div>
-    <div id="modal" class="modal"></div>
+    <div id="modal" class="modal" style="display:none"></div>
     <div id="nostart">
         <h1>Hunt hasn't started yet. Check back later!</h1>
     </div>
@@ -204,7 +204,7 @@
             messagingSenderId: "808817795355",
             appId: "1:808817795355:web:6a2454e71cdce466f773be",
             measurementId: "G-T9V22WWTBK"
-};
+        };
 
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
