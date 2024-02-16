@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/YtmNbTq/transparent-logo.png">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: #0c0c46;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        #navbar {
+            display: flex;
+            background-color: #0c0c46;
+            padding: 10px;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        #logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #fff;
+            margin-right: 10px;
+        }
+
+        #logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        #brand-name {
+            color: #fff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        #navbar-buttons {
+            display: flex;
+            align-items: center;
+            font-size: 22px;
+        }
+
+        #navbar-buttons button {
+            background-color: #00f;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        #navbar-buttons button:hover {
+            background-color: #000;
+        }
+
+        #navbar-buttons #leaderboard-button {
+            margin-left: 0;
+        }
+
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #dddddd10;
+        }
+
+        th {
+            font-weight: bold;
+            font-size: 20px;
+            background-color: #0c0c66;
+            color: #ddd;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            position: static;
+            bottom: 0;
+            max-width: 100%;
+            color: #ddd;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar">
+        <div id="logo-container">
+            <div id="logo">
+                <img src="https://i.ibb.co/Zmqqt73/IMG-20240125-223643.jpg" alt="Logo">
+            </div>
+            <div id="brand-name">PreCipherSaga</div>
+        </div>
+        <div id="navbar-buttons">
+            <button onclick="play()"><i class="fa-solid fa-play"></i></button>
+            <button onclick="home()"><i class="fa-solid fa-house"></i></button>
+            <button onclick="contri()"><i class="fa-solid fa-users-gear"></i></button>
+        </div>
+    </div>
+    <div id="content">
+        <table>
+            <tr>
+                <th>Rank</th>
+                <th>User</th>
+                <th>Points</th>
+            </tr>
+        </table>
+    </div>
+    <footer>
+        <p><!--Note: Rajat Pandey, Soham Wani, Vivek Kumar, Shreya Mohanty and Shruti Verma are ineligible to win.<br>--><a
+                href="credits.html" style="color: #ddd;text-decoration: none;">Made with &#10084; by Programming
+                Domain, TechnoCrats GSV</a></p>
+    </footer>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCe_avq70kaG5Om1Pmi3vgQdCqppZ9066k",
+            authDomain: "preciphersaga.firebaseapp.com",
+            databaseURL: "https://preciphersaga-default-rtdb.firebaseio.com",
+            projectId: "preciphersaga",
+            storageBucket: "preciphersaga.appspot.com",
+            messagingSenderId: "311896747046",
+            appId: "1:311896747046:web:9a1844f950caf462f44ae7",
+            measurementId: "G-4CFBLSVMV4"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        var usersRef = firebase.database().ref('users');
+
+        usersRef.once('value').then(function (snapshot) {
+            var users = Object.entries(snapshot.val());
+            users.sort(function (a, b) {
+                if (b[1].points !== a[1].points) {
+                    return b[1].points - a[1].points;
+                } else {
+                    return a[1].latest - b[1].latest;
+                }
+            });
+            var rank = 1;
+
+            users.forEach(function (user) {
+                var userId = user[0];
+                var points = user[1].points;
+
+                var userNameRef = firebase.database().ref('users/' + userId + '/name');
+                userNameRef.once('value').then(function (nameSnapshot) {
+                    var userName = nameSnapshot.val() || 'Unknown';
+
+                    var row = "<tr><td>" + rank + "</td><td>" + userName + "</td><td>" + points + "</td></tr>";
+                    document.querySelector('table').insertAdjacentHTML('beforeend', row);
+                    rank++;
+                }).catch(function (error) {
+                    console.error("Error fetching user name:", error);
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const navbarHeight = document.getElementById('navbar').offsetHeight;
+
+            document.getElementById('content').style.marginTop = navbarHeight + 'px';
+        });
+
+        function play() {
+            window.location.href = 'index.html';
+        }
+
+        function home() {
+            window.location.href = 'register.html';
+        }
+
+        function contri() {
+            window.location.href = 'credits.html';
+        }
+    </script>
+</body>
+
+</html>
